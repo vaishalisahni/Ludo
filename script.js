@@ -37,7 +37,7 @@ function generatePlayerPaths() {
     const start = startPositions[color];
     const path = [];
 
-    // Add main path (51 positions total)
+    // Add main path (52 positions total)
     for (let i = 0; i < 51; i++) {
       path.push(mainPath[(start + i) % 52]);
     }
@@ -49,7 +49,6 @@ function generatePlayerPaths() {
 
     players[color].path = path;
   });
-  console.log(players);
 }
 
 // ===== GAME FUNCTIONS =====
@@ -75,6 +74,7 @@ function getMovableTokens(playerColor, diceValue) {
 function moveToken(playerColor, tokenIndex, diceValue) {
   const player = players[playerColor];
   let pos = player.tokens[tokenIndex];
+  let result = { success: false, captured: false };
 
   if (pos === 0 && diceValue === 6) {
     pos = 1; // Enter board
@@ -82,23 +82,25 @@ function moveToken(playerColor, tokenIndex, diceValue) {
     pos += diceValue;
   }
 
-  if (pos > player.path.length) return false; // Invalid move
+  if (pos > player.path.length) return result; // Invalid move
 
   player.tokens[tokenIndex] = pos;
 
-  // Check for captures
-  if (pos <= 51) { // Only on main path, not in home stretch
+  // Check for captures - only on main path, not in home stretch
+  if (pos <= 51) {
     const cellId = player.path[pos - 1];
     if (!safePositions.includes(cellId)) {
-      captureTokens(playerColor, cellId);
+      result.captured = captureTokens(playerColor, cellId);
     }
   }
 
   updateTokenDisplay();
-  return true;
+  result.success = true;
+  return result;
 }
 
 function captureTokens(attacker, cellId) {
+  let captured = false;
   Object.keys(players).forEach(color => {
     if (color === attacker) return;
 
@@ -106,9 +108,11 @@ function captureTokens(attacker, cellId) {
     player.tokens.forEach((pos, idx) => {
       if (pos > 0 && pos <= 51 && player.path[pos - 1] === cellId) {
         player.tokens[idx] = 0; // Send back to base
+        captured = true;
       }
     });
   });
+  return captured;
 }
 
 function checkWin(playerColor) {
@@ -123,7 +127,7 @@ function nextPlayer() {
 }
 
 function updateTokenDisplay() {
-  // Clear all path tokens
+  // Clear all path tokens - from web page
   document.querySelectorAll('.path-token').forEach(token => token.remove());
 
   // Place tokens on board
@@ -173,17 +177,19 @@ function selectToken(tokenIndex) {
   tokenSelection.style.display = 'none';
   diceBtn.disabled = false;
 
-  const moved = moveToken(currentPlayer, tokenIndex, currentDiceValue);
+  const result = moveToken(currentPlayer, tokenIndex, currentDiceValue);
 
-  if (moved) {
+  if (result.success) {
     if (checkWin(currentPlayer)) {
       updateStatus(`${currentPlayer.toUpperCase()} WINS! 🎉`);
       gameWon = true;
       diceBtn.disabled = true;
     } else {
-      // Continue turn if rolled 6, otherwise next player
-      if (currentDiceValue !== 6) {
+      // Continue turn if rolled 6 OR captured an opponent
+      if (currentDiceValue !== 6 && !result.captured) {
         nextPlayer();
+      } else if (result.captured) {
+        updateStatus(`${currentPlayer} captured! Roll again!`);
       }
     }
   }
@@ -208,15 +214,18 @@ diceBtn.addEventListener("click", () => {
     }, 1500);
   } else if (movable.length === 1) {
     // Auto-move if only one option
-    const moved = moveToken(currentPlayer, movable[0], roll);
-    if (moved) {
+    const result = moveToken(currentPlayer, movable[0], roll);
+    if (result.success) {
       if (checkWin(currentPlayer)) {
         updateStatus(`${currentPlayer.toUpperCase()} WINS! 🎉`);
         gameWon = true;
         diceBtn.disabled = true;
       } else {
-        if (roll !== 6) {
+        // Continue turn if rolled 6 OR captured an opponent
+        if (roll !== 6 && !result.captured) {
           nextPlayer();
+        } else if (result.captured) {
+          updateStatus(`${currentPlayer} captured! Roll again!`);
         }
       }
     }
