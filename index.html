@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ludo</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="ludo-container">
+      <div id="ludo-board">
+        <div id="red-Board" class="board">
+          <div>
+            <div class="token red" data-player="red" data-token="0"></div>
+            <div class="token red" data-player="red" data-token="1"></div>
+            <div class="token red" data-player="red" data-token="2"></div>
+            <div class="token red" data-player="red" data-token="3"></div>
+          </div>
+        </div>
+
+        <div id="green-Path" class="verticalPath">
+          <div class="ludo-box" id="r11"></div>
+          <div class="ludo-box" id="r12"></div>
+          <div class="ludo-box" id="r13"></div>
+          <div class="ludo-box" id="r10"></div>
+          <div class="ludo-box greenLudoBox" id="gh1"></div>
+          <div class="ludo-box greenLudoBox" id="g1"></div>
+          <div class="ludo-box safe" id="r9"></div>
+          <div class="ludo-box greenLudoBox" id="gh2"></div>
+          <div class="ludo-box" id="g2"></div>
+          <div class="ludo-box" id="r8"></div>
+          <div class="ludo-box greenLudoBox" id="gh3"></div>
+          <div class="ludo-box" id="g3"></div>
+          <div class="ludo-box" id="r7"></div>
+          <div class="ludo-box greenLudoBox" id="gh4"></div>
+          <div class="ludo-box" id="g4"></div>
+          <div class="ludo-box" id="r6"></div>
+          <div class="ludo-box greenLudoBox" id="gh5"></div>
+          <div class="ludo-box" id="g5"></div>
+        </div>
+
+        <div id="green-Board" class="board">
+          <div>
+            <div class="token green" data-player="green" data-token="0"></div>
+            <div class="token green" data-player="green" data-token="1"></div>
+            <div class="token green" data-player="green" data-token="2"></div>
+            <div class="token green" data-player="green" data-token="3"></div>
+          </div>
+        </div>
+
+        <div id="red-Path" class="horizontalPath">
+          <div class="ludo-box" id="b13"></div>
+          <div class="ludo-box redLudoBox" id="r1"></div>
+          <div class="ludo-box" id="r2"></div>
+          <div class="ludo-box" id="r3"></div>
+          <div class="ludo-box" id="r4"></div>
+          <div class="ludo-box" id="r5"></div>
+          <div class="ludo-box" id="b12"></div>
+          <div class="ludo-box redLudoBox" id="rh1"></div>
+          <div class="ludo-box redLudoBox" id="rh2"></div>
+          <div class="ludo-box redLudoBox" id="rh3"></div>
+          <div class="ludo-box redLudoBox" id="rh4"></div>
+          <div class="ludo-box redLudoBox" id="rh5"></div>
+          <div class="ludo-box" id="b11"></div>
+          <div class="ludo-box" id="b10"></div>
+          <div class="ludo-box safe" id="b9"></div>
+          <div class="ludo-box" id="b8"></div>
+          <div class="ludo-box" id="b7"></div>
+          <div class="ludo-box" id="b6"></div>
+        </div>
+
+        <div id="win-Zone"></div>
+
+        <div id="yellow-Path" class="horizontalPath">
+          <div class="ludo-box" id="g6"></div>
+          <div class="ludo-box" id="g7"></div>
+          <div class="ludo-box" id="g8"></div>
+          <div class="ludo-box safe" id="g9"></div>
+          <div class="ludo-box" id="g10"></div>
+          <div class="ludo-box" id="g11"></div>
+          <div class="ludo-box yellowLudoBox" id="yh5"></div>
+          <div class="ludo-box yellowLudoBox" id="yh4"></div>
+          <div class="ludo-box yellowLudoBox" id="yh3"></div>
+          <div class="ludo-box yellowLudoBox" id="yh2"></div>
+          <div class="ludo-box yellowLudoBox" id="yh1"></div>
+          <div class="ludo-box" id="g12"></div>
+          <div class="ludo-box" id="y5"></div>
+          <div class="ludo-box" id="y4"></div>
+          <div class="ludo-box" id="y3"></div>
+          <div class="ludo-box" id="y2"></div>
+          <div class="ludo-box yellowLudoBox" id="y1"></div>
+          <div class="ludo-box" id="g13"></div>
+        </div>
+
+        <div id="blue-Board" class="board">
+          <div>
+            <div class="token blue" data-player="blue" data-token="0"></div>
+            <div class="token blue" data-player="blue" data-token="1"></div>
+            <div class="token blue" data-player="blue" data-token="2"></div>
+            <div class="token blue" data-player="blue" data-token="3"></div>
+          </div>
+        </div>
+
+        <div id="blue-Path" class="verticalPath">
+          <div class="ludo-box" id="b5"></div>
+          <div class="ludo-box blueLudoBox" id="bh5"></div>
+          <div class="ludo-box" id="y6"></div>
+          <div class="ludo-box" id="b4"></div>
+          <div class="ludo-box blueLudoBox" id="bh4"></div>
+          <div class="ludo-box" id="y7"></div>
+          <div class="ludo-box" id="b3"></div>
+          <div class="ludo-box blueLudoBox" id="bh3"></div>
+          <div class="ludo-box" id="y8"></div>
+          <div class="ludo-box" id="b2"></div>
+          <div class="ludo-box blueLudoBox" id="bh2"></div>
+          <div class="ludo-box safe" id="y9"></div>
+          <div class="ludo-box blueLudoBox" id="b1"></div>
+          <div class="ludo-box blueLudoBox" id="bh1"></div>
+          <div class="ludo-box" id="y10"></div>
+          <div class="ludo-box" id="y13"></div>
+          <div class="ludo-box" id="y12"></div>
+          <div class="ludo-box" id="y11"></div>
+        </div>
+
+        <div id="yellow-Board" class="board">
+          <div>
+            <div class="token yellow" data-player="yellow" data-token="0"></div>
+            <div class="token yellow" data-player="yellow" data-token="1"></div>
+            <div class="token yellow" data-player="yellow" data-token="2"></div>
+            <div class="token yellow" data-player="yellow" data-token="3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="controls">
+        <button id="diceBtn">Roll Dice</button>
+        <div id="diceResult">-</div>
+        <div id="statusMsg">Current Player: Red</div>
+        <div id="tokenSelection" class="token-selection" style="display: none">
+          <div>Select a token to move:</div>
+          <div class="token-buttons" id="tokenButtons"></div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>

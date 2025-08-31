@@ -1,0 +1,284 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --red: #fa0000;
+  --green: #009a2a;
+  --yellow: #fee800;
+  --blue: #00acff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(
+    circle,
+    rgba(11, 64, 177, 1) 0%,
+    rgba(7, 30, 78, 1) 100%
+  );
+  font-family: "Poppins", sans-serif;
+}
+
+.ludo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  width: 100%;
+  height: 100vh;
+}
+
+#ludo-board {
+  max-width: 500px;
+  max-height: 500px;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: grid;
+  grid-template-areas:
+    "red-Board red-Board green-Path green-Board green-Board"
+    "red-Board red-Board green-Path green-Board green-Board"
+    "red-Path red-Path win-Zone yellow-Path yellow-Path"
+    "blue-Board blue-Board blue-Path yellow-Board yellow-Board"
+    "blue-Board blue-Board blue-Path yellow-Board yellow-Board";
+}
+
+/* Board Areas */
+#red-Board {
+  grid-area: red-Board;
+  background-color: var(--red);
+}
+#yellow-Board {
+  grid-area: yellow-Board;
+  background-color: var(--yellow);
+}
+#blue-Board {
+  grid-area: blue-Board;
+  background-color: var(--blue);
+}
+#green-Board {
+  grid-area: green-Board;
+  background-color: var(--green);
+}
+
+/* Paths */
+#green-Path {
+  grid-area: green-Path;
+}
+#blue-Path {
+  grid-area: blue-Path;
+}
+#yellow-Path {
+  grid-area: yellow-Path;
+}
+#red-Path {
+  grid-area: red-Path;
+}
+#win-Zone {
+  grid-area: win-Zone;
+  background: #ffd700;
+}
+
+.verticalPath {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.horizontalPath {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.board {
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board div {
+  width: 80%;
+  height: 80%;
+  background: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.token {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  border: 2px solid #333;
+  cursor: pointer;
+}
+
+.token.red {
+  background: var(--red);
+}
+.token.green {
+  background: var(--green);
+}
+.token.yellow {
+  background: var(--yellow);
+}
+.token.blue {
+  background: var(--blue);
+}
+
+.token.clickable {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.ludo-box {
+  border: 1px solid #11111142;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30px;
+}
+
+.redLudoBox {
+  background: var(--red);
+}
+.greenLudoBox {
+  background: var(--green);
+}
+.blueLudoBox {
+  background: var(--blue);
+}
+.yellowLudoBox {
+  background: var(--yellow);
+}
+
+.safe {
+  background: #ffd700 !important;
+  position: relative;
+}
+
+.safe::before {
+  content: "★";
+  position: absolute;
+  font-size: 20px;
+  color: #333;
+}
+
+.path-token {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  margin: 2px;
+}
+
+.path-token.red {
+  background: var(--red);
+}
+.path-token.green {
+  background: var(--green);
+}
+.path-token.yellow {
+  background: var(--yellow);
+}
+.path-token.blue {
+  background: var(--blue);
+}
+
+#controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  color: white;
+}
+
+#diceBtn {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#diceBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#diceBtn:disabled {
+  background: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#diceResult {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  min-width: 60px;
+  text-align: center;
+}
+
+#statusMsg {
+  font-size: 16px;
+  text-align: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  min-width: 200px;
+}
+
+.token-selection {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.token-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.token-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.token-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
