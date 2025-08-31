@@ -15,7 +15,7 @@ const players = {
 
 let currentPlayer = "red";
 const playerOrder = ["red", "green", "yellow", "blue"];
-const safePositions = ["r9", "g9", "y9", "b9"];
+const safePositions = ["r1", "b1", "g1", "y1", "r9", "g9", "y9", "b9"];
 let currentDiceValue = 0;
 let gameWon = false;
 
@@ -37,8 +37,8 @@ function generatePlayerPaths() {
     const start = startPositions[color];
     const path = [];
 
-    // Add main path (52 positions total)
-    for (let i = 0; i < 52; i++) {
+    // Add main path (51 positions total)
+    for (let i = 0; i < 51; i++) {
       path.push(mainPath[(start + i) % 52]);
     }
 
@@ -49,6 +49,7 @@ function generatePlayerPaths() {
 
     players[color].path = path;
   });
+  console.log(players);
 }
 
 // ===== GAME FUNCTIONS =====
@@ -86,7 +87,7 @@ function moveToken(playerColor, tokenIndex, diceValue) {
   player.tokens[tokenIndex] = pos;
 
   // Check for captures
-  if (pos <= 52) { // Only on main path, not in home stretch
+  if (pos <= 51) { // Only on main path, not in home stretch
     const cellId = player.path[pos - 1];
     if (!safePositions.includes(cellId)) {
       captureTokens(playerColor, cellId);
@@ -103,7 +104,7 @@ function captureTokens(attacker, cellId) {
 
     const player = players[color];
     player.tokens.forEach((pos, idx) => {
-      if (pos > 0 && pos <= 52 && player.path[pos - 1] === cellId) {
+      if (pos > 0 && pos <= 51 && player.path[pos - 1] === cellId) {
         player.tokens[idx] = 0; // Send back to base
       }
     });
@@ -143,6 +144,7 @@ function updateTokenDisplay() {
           const pathToken = document.createElement('div');
           pathToken.className = `path-token ${color}`;
           pathToken.title = `${color} token ${tokenIdx + 1}`;
+          pathToken.textContent = tokenIdx + 1;
           cell.appendChild(pathToken);
         }
       }
